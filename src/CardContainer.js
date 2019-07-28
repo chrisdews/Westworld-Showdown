@@ -9,12 +9,12 @@ class CardContainer extends Component {
     render() {
 
         const allCards = this.props.allCards
-        
+       
         return (
             <>
               <Grid columns={2} relaxed='very'>
                 {
-                    allCards.map(card => <Grid.Column><CharCard card={card}/></Grid.Column>)
+                    allCards.map((card,i) => <Grid.Column key={i}><CharCard card={card}/></Grid.Column>)
                 }
               </Grid>
 

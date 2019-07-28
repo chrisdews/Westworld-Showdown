@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CardContainer from './CardContainer'
-// import API from './API.js'
+import API from './API.js'
 
 class App extends React.Component {
 
@@ -11,12 +11,19 @@ class App extends React.Component {
     cards: []
   }
 
+  createUser = (user) => { // works
+    API.signUp(user).then(userData => this.setState({ user: userData.user }));
+  }
+  signIn = (user) => {
+     API.signIn(user).then(userData => this.setState({ user: userData.user }))
+  }
+
   componentDidMount(){
     // API.cards()
     // .then(data => console.log(data))   
 
     const cardsURL = 'http://localhost:3000/api/v1/cards'
-    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}))
+    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}, console.log(data)))
   }
 
   render(){
@@ -46,5 +53,6 @@ class App extends React.Component {
     );
   }
 }
+
 
 export default App;
