@@ -1,39 +1,35 @@
-import React from "react";
+import React from 'react'
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
-class LoginComponent extends React.Component {
-  render() {
-    return (
-      <div className="nav">
-        {this.props.logged_in ? (
-          <div>
-            <p> {`you're logged in as ${this.props.username}`}</p>
-            <button onClick={this.props.getPosts}>get my posts</button>
-            <button onClick={this.props.handleLogOut}>Log out</button>
-          </div>
-        ) : (
-          <form>
-            <label htmlFor="username">Username:</label>
-            <input
-              onChange={this.props.handleChange}
-              id="username"
-              type="text"
-              name="username"
-              value={this.props.username}
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-              onChange={this.props.handleChange}
-              id="password"
-              type="password"
-              name="password"
-              value={this.props.password}
-            />
-            <button onClick={this.props.onLoginClicked}>Log in</button>
-          </form>
-        )}
-      </div>
-    );
-  }
-}
+
+const LoginComponent = () => (
+  <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+    <Grid.Column style={{ maxWidth: 450 }}>
+      <Header as='h2' color='teal' textAlign='center'>
+        {/* <Image src='/logo2.png' />  */}
+        Log-in to your account
+      </Header>
+      <Form size='large'>
+        <Segment stacked>
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+          <Form.Input
+            fluid
+            icon='lock'
+            iconPosition='left'
+            placeholder='Password'
+            type='password'
+          />
+
+          <Button color='teal' fluid size='large'>
+            Login
+          </Button>
+        </Segment>
+      </Form>
+      <Message>
+        New to us? <a href='#'>Sign Up</a>
+      </Message>
+    </Grid.Column>
+  </Grid>
+)
 
 export default LoginComponent;
