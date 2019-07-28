@@ -1,32 +1,25 @@
-const API_BASE_URL = `http://localhost:3000`;
+const endpoint = 'http://localhost:3000/api/v1/'
+const cardsUrl = `${endpoint}/cards`
 
-const headers = {
-  "Content-Type": "application/json",
-  Accepts: "application/json"
-};
 
-const login = (username, password) => {
-  return fetch(`${API_BASE_URL}/auth/create`, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({ username, password })
-  }).then(res => res.json());
-};
+const jsonify = res => {
+    if (res.ok) {
+        return res.json()
+    } else {
+        throw new Error(res.json())
+    }
+}
 
-const getCurrentUser = token => {
-  return fetch(`${API_BASE_URL}/auth/show`, {
-    headers: { ...headers, Authorization: token }
-  }).then(res => res.json());
-};
+const handleServerError = resp => console.error(resp)
 
-const getPosts = token => {
-  return fetch(`${API_BASE_URL}/posts`, {
-    headers: { ...headers, Authorization: token }
-  }).then(res => res.json());
-};
+const cards = () => {fetch(cardsUrl)
+    .then(jsonify)
+    .catch(handleServerError)
+}
+
+// return the fetch
+
 
 export default {
-  login,
-  getCurrentUser,
-  getPosts
-};
+    cards
+}

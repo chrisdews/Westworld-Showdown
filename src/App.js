@@ -1,80 +1,48 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import API from "./API";
-import Posts from "./Posts";
-import LoginComponent from "./LoginComponent";
+import CardContainer from './CardContainer'
+// import API from './API.js'
 
 class App extends React.Component {
-  state = {
-    logged_in: false,
-    username: "",
-    password: "",
-    posts: []
-  };
 
-  componentDidMount() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      API.getCurrentUser(token).then(user => {
-        this.setState({ logged_in: true, username: user.username });
-      });
-    }
+  state = {
+    currentUser: '',
+    cards: []
   }
 
-  getPosts = () => {
-    const token = localStorage.getItem("token");
-    API
-      .getPosts(token)
-      .then(posts =>
-        this.setState({ posts }, () => console.log(this.state.posts))
-      );
-  };
+  componentDidMount(){
+    // API.cards()
+    // .then(data => console.log(data))   
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+    const cardsURL = 'http://localhost:3000/api/v1/cards'
+    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}))
+  }
 
-  onLoginClicked = e => {
-    e.preventDefault();
-    API.login(this.state.username, this.state.password).then(data => {
-      if (data.error) {
-        alert("something is wrong with your credentials");
-        this.setState({ username: "", password: "" });
-      } else {
-        localStorage.setItem("token", data.jwt);
-        this.setState({ logged_in: true, username: data.username });
-      }
-    });
-  };
+  render(){
 
-  handleLogOut = () => {
-    localStorage.clear("token");
-    this.setState({
-      logged_in: false,
-      username: "",
-      password: "",
-      posts: []
-    });
-  };
-
-  render() {
+    const allCards = this.state.cards
     return (
+      <>
       <div className="App">
-        <h1>React Auth</h1>
-        <LoginComponent
-          logged_in={this.state.logged_in}
-          onLoginClicked={this.onLoginClicked}
-          handleLogOut={this.handleLogOut}
-          username={this.state.username}
-          handleChange={this.handleChange}
-          getPosts={this.getPosts}
-          password={this.state.password}
-        />
-        <Posts posts={this.state.posts} />
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          
+          <CardContainer allCards={allCards}/>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
       </div>
+      </>
     );
   }
 }
