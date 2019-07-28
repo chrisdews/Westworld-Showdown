@@ -16,7 +16,7 @@ class App extends React.Component {
     // .then(data => console.log(data))   
 
     const cardsURL = 'http://localhost:3000/api/v1/cards'
-    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}))
+    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}, console.log(data)))
   }
 
   render(){
