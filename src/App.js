@@ -2,13 +2,20 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CardContainer from './CardContainer'
-// import API from './API.js'
+import API from './API.js'
 
 class App extends React.Component {
 
   state = {
     currentUser: '',
     cards: []
+  }
+
+  createUser = (user) => { // works
+    API.signUp(user).then(userData => this.setState({ user: userData.user }));
+  }
+  signIn = (user) => {
+     API.signIn(user).then(userData => this.setState({ user: userData.user }))
   }
 
   componentDidMount(){
