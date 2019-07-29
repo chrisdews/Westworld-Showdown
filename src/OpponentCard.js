@@ -3,17 +3,13 @@ import { Card, Image, List} from 'semantic-ui-react'
 
 
 
-class CharCard extends React.Component {
+class OpponentCard extends React.Component {
 
-  handleClick = (attributeKey, attributeValue) => {
-    this.props.setCard(attributeKey, attributeValue)
-    
-  }
                  
   render() {
     return (
-      
      <Card>
+     
       <Image src={this.props.card.imageurl} wrapped ui={false} />
         <Card.Content>
           <Card.Header name="name">{this.props.card.name}</Card.Header>
@@ -25,13 +21,13 @@ class CharCard extends React.Component {
         <Card.Content extra>
         <List>
               <List.Item>
-                <List.Content onClick={() => this.handleClick('apperception', this.props.card.apperception)}>Apperception: {this.props.card.apperception}</List.Content>
+                <List.Content>Apperception: {this.props.card.apperception}</List.Content>
               </List.Item>
               <List.Item>
-                <List.Content onClick={() => this.handleClick('charm', this.props.card.charm)}>Charm: {this.props.card.charm}</List.Content>
+                <List.Content>Charm: {this.props.card.charm}</List.Content>
               </List.Item>
               <List.Item>
-                <List.Content onClick={() => this.handleClick('aggression', this.props.card.aggression)}>Aggression: {this.props.card.aggression}</List.Content>
+                <List.Content>Aggression: {this.props.card.aggression}</List.Content>
               </List.Item>
         </List>
       </Card.Content>
@@ -43,4 +39,4 @@ class CharCard extends React.Component {
 
 
 
-export default CharCard;
+export default OpponentCard;

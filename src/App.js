@@ -1,16 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import CardContainer from './CardContainer'
+import GameDisplay from './GameDisplay'
 // import API from './API.js'
 
 class App extends React.Component {
 
   state = {
-    currentUser: '',
-    cards: [],
+    currentUser: 'Chris',
+    allCards: [],
+    gameStatus: 'Let the battle commence...',
+    arrayIndexCounter: 0,
+    userAllCards: undefined,
+    oppAllCards: undefined,
     userCard: undefined,
     oppCard: undefined
+    
   }
 
 
@@ -19,48 +24,74 @@ class App extends React.Component {
     // .then(data => console.log(data))   
 
     const cardsURL = 'http://localhost:3000/api/v1/cards'
-    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}))
+    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
   }
 
-  setUserCard = () => {
-    console.log('hi from set user')
+  randomiseAndSplitAllCards = () => {
+    console.log('array randomised!')
+    console.log(this.state.allCards)
   }
 
-  setOppCard = () => {
-    console.log('hi from set opp')
+  setUserCard = (attributeKey, attributeValue) => {
+    console.log(attributeKey, attributeValue)
+    // const att = attributeKey    
+    if (attributeValue > this.state.oppCard[attributeKey]){
+      const winnerText = `${this.state.userCard.name} took down ${this.state.oppCard.name}! You took ownership of ${this.state.oppCard.name}`
+      this.setState({gameStatus: winnerText})
+      this.setState({userAllCards: [...this.state.userAllCards, this.state.oppCard]})
+      const takenCard = this.state.oppCard
+      const oppAllCards = this.state.oppAllCards
+      const newOppCards = oppAllCards.filter(card => card.id !== takenCard.id)
+      this.setState({oppAllCards: newOppCards})
+    } else {
+      const loserText = `${this.state.userCard.name} was brutally disabled by ${this.state.oppCard.name}! Your opponent took ownership of ${this.state.userCard.name}`
+      this.setState({gameStatus: loserText})
+      this.setState({oppAllCards: [...this.state.oppAllCards, this.state.userCard]})
+      const takenCard = this.state.userCard
+      const userAllCards = this.state.userAllCards
+      const newUserCards = userAllCards.filter(card => card.id !== takenCard.id)
+      this.setState({userAllCards: newUserCards})
+    }
   }
+
+
+
+  // setOppCard = () => {
+  //   console.log('hi from set opp')
+  // }
 
 
 
   render(){
 
-    const allCards = this.state.cards
+    const allCards = this.state.allCards
     const userCard = this.state.userCard
     const oppCard = this.state.oppCard
+    const currentUser = this.state.currentUser
+    const gameStatus = this.state.gameStatus
+    const userCardCount = this.state.userAllCards.length
+    const oppCardCount = this.state.oppAllCards.length
+
     return (
       <>
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
           
+          <GameDisplay 
+            currentUser={currentUser}
+            gameStatus={gameStatus}
+          />
           <CardContainer 
             allCards={allCards} 
             userCard={userCard} 
-            oppCard={oppCard} 
+            oppCard={oppCard}
+            userCardCount={userCardCount}
+            oppCardCount={oppCardCount}
+            currentUser={currentUser} 
             setUserCard={this.setUserCard} 
             setOppCard={this.setOppCard}
           />
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          
         </header>
       </div>
       </>
