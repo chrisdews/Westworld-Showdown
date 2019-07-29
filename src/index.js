@@ -5,20 +5,18 @@ import App from './App';
 
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import LoginComponent from './LoginComponent';
+//import WelcomePage from './WelcomePage';
 
 
  ReactDOM.render((
+   <>
   <Router>
-    <React.Fragment>
-      <Route exact path="/" component={App} />
-      <Route exact path="/welcome" component={LoginComponent} />
-      {/* <Route exact path="/login" component={Login} /> */}
-    </React.Fragment>
-  </Router>),
+   
+      <Route path='/' component={App} />
+    
+  </Router></>),
   document.getElementById('root')
  );
- 
  
 
 // If you want your app to work offline and load faster, you can change
