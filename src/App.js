@@ -8,8 +8,11 @@ class App extends React.Component {
 
   state = {
     currentUser: '',
-    cards: []
+    cards: [],
+    userCard: undefined,
+    oppCard: undefined
   }
+
 
   componentDidMount(){
     // API.cards()
@@ -19,9 +22,21 @@ class App extends React.Component {
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({cards: data}))
   }
 
+  setUserCard = () => {
+    console.log('hi from set user')
+  }
+
+  setOppCard = () => {
+    console.log('hi from set opp')
+  }
+
+
+
   render(){
 
     const allCards = this.state.cards
+    const userCard = this.state.userCard
+    const oppCard = this.state.oppCard
     return (
       <>
       <div className="App">
@@ -31,7 +46,13 @@ class App extends React.Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           
-          <CardContainer allCards={allCards}/>
+          <CardContainer 
+            allCards={allCards} 
+            userCard={userCard} 
+            oppCard={oppCard} 
+            setUserCard={this.setUserCard} 
+            setOppCard={this.setOppCard}
+          />
           <a
             className="App-link"
             href="https://reactjs.org"
