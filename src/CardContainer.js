@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import CharCard from './CharCard'
+
+import OpponentCard from './OpponentCard'
+import HandStatus from './HandStatus'
 import { Grid, Divider, Button } from 'semantic-ui-react'
 import { NavLink } from "react-router-dom";
 import API from './API'
@@ -15,25 +18,6 @@ class CardContainer extends Component {
       currentUser: null
     }
   }
-
-  // getUserFromToken = () => {
-  //   return API.validateUser().then(resp => {
-  //     this.setState({ currentUser: resp })
-  //     return resp
-  //   }
-    
-  //   )
-
-  // }
-
-  // componentDidMount() {
-  //   this.getUserFromToken().then(resp => {
-  //     if (!this.state.currentUser) {
-  //       console.log("No Current User...redirecting back to welcome page")
-  //       this.props.history.push('/')
-  //     }
-  //   })
-  // }
 
 componentDidMount(){
   if (!localStorage.token) {
@@ -56,6 +40,7 @@ componentDidMount(){
     const { currentUser } = this.props
 
     return (
+      
       <>
         <Button
           as={NavLink}
@@ -65,13 +50,36 @@ componentDidMount(){
         {/* <h2> {currentUser ? `Logged in as ${this.props.currentUser.username}` : null}</h2> */}
         <h2> {currentUser ? `Logged in as ${currentUser.username}` : null}</h2>
 
-        <Grid columns={2} relaxed='very'>
-          {
-            allCards.map((card, i) => <Grid.Column key={i}><CharCard card={card} /></Grid.Column>)
-          }
-        </Grid>
+        
+              <Grid columns={2} relaxed='very'>
+                <Grid.Column>
+                  <h1>Your Card:</h1>
+                  <CharCard 
+                    card={this.props.userCard} 
+                    setCard={this.props.setUserCard} 
+                  />
+                  <HandStatus 
+                    user={this.props.currentUser}
+                    cardCount={this.props.userCardCount}
+                  />
+                  
+                </Grid.Column>
+                <Grid.Column>
+                  <h1>Opponent Card:</h1>
+                  <OpponentCard 
+                    card={this.props.oppCard} 
+                  />
+                  <HandStatus 
+                    user="Computer"
+                    cardCount={this.props.oppCardCount}
+                  />
+                  
+                </Grid.Column>
+              </Grid>
+              <Divider vertical>vs</Divider>
 
-        <Divider vertical>vs</Divider>
+              
+      
       </>
     );
   }
