@@ -10,11 +10,11 @@ class App extends React.Component {
     currentUser: 'Chris',
     allCards: [],
     gameStatus: 'Let the battle commence...',
-    arrayIndexCounter: 0,
-    userAllCards: undefined,
-    oppAllCards: undefined,
-    userCard: undefined,
-    oppCard: undefined
+    userIndexCounter: 0,
+    oppIndexCounter: 0,
+    userAllCards: [],
+    oppAllCards: [],
+    gameStart: false
     
   }
 
@@ -27,31 +27,47 @@ class App extends React.Component {
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
   }
 
-  randomiseAndSplitAllCards = () => {
-    console.log('array randomised!')
-    console.log(this.state.allCards)
-  }
-
   setUserCard = (attributeKey, attributeValue) => {
     console.log(attributeKey, attributeValue)
-    // const att = attributeKey    
-    if (attributeValue > this.state.oppCard[attributeKey]){
-      const winnerText = `${this.state.userCard.name} took down ${this.state.oppCard.name}! You took ownership of ${this.state.oppCard.name}`
-      this.setState({gameStatus: winnerText})
-      this.setState({userAllCards: [...this.state.userAllCards, this.state.oppCard]})
-      const takenCard = this.state.oppCard
-      const oppAllCards = this.state.oppAllCards
-      const newOppCards = oppAllCards.filter(card => card.id !== takenCard.id)
-      this.setState({oppAllCards: newOppCards})
+    // const att = attributeKey  
+    let userCard = this.state.userAllCards[this.state.userIndexCounter]
+    let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
+    console.log(userCard)
+    console.log(oppCard)  
+
+    if (attributeValue > oppCard[attributeKey]){
+      let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
+      let oppAllCards = this.state.oppAllCards
+      let newOppCards = oppAllCards.filter(card => card.id !== oppCard.id)
+      this.setState({
+        gameStatus: winnerText, 
+        userAllCards: [...this.state.userAllCards, oppCard], 
+        oppAllCards: newOppCards, 
+        userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? ++this.state.userIndexCounter : 0)
+      })  
     } else {
-      const loserText = `${this.state.userCard.name} was brutally disabled by ${this.state.oppCard.name}! Your opponent took ownership of ${this.state.userCard.name}`
-      this.setState({gameStatus: loserText})
-      this.setState({oppAllCards: [...this.state.oppAllCards, this.state.userCard]})
-      const takenCard = this.state.userCard
-      const userAllCards = this.state.userAllCards
-      const newUserCards = userAllCards.filter(card => card.id !== takenCard.id)
-      this.setState({userAllCards: newUserCards})
+      let loserText = `${userCard.name} was brutally disabled by ${oppCard.name}! Your opponent took ownership of ${userCard.name}`
+      let oldUserAllCards = this.state.userAllCards
+      let newUserCards = oldUserAllCards.filter(card => card.id !== userCard.id)
+      this.setState({
+        gameStatus: loserText, 
+        oppAllCards: [...this.state.oppAllCards, userCard], 
+        userAllCards: newUserCards, 
+        oppIndexCounter: (this.state.oppIndexCounter < this.state.oppAllCards.length ? ++this.state.oppIndexCounter : 0)
+      }) 
     }
+  }
+
+  getRandomInt = () => (Math.floor(Math.random()*Math.floor(8)))
+
+  startGame = () => {
+    this.setState({gameStart: true})
+    const allCards = this.state.allCards
+    const randNum = this.getRandomInt()
+    const userCards = allCards.splice(randNum, allCards.length/2)
+    // const userCard = userCards[this.state.userIndexCounter]
+    // const oppCard = allCards[this.state.oppIndexCounter]
+    this.setState({userAllCards: userCards, oppAllCards: allCards})
   }
 
 
@@ -65,8 +81,8 @@ class App extends React.Component {
   render(){
 
     const allCards = this.state.allCards
-    const userCard = this.state.userCard
-    const oppCard = this.state.oppCard
+    let userCard = this.state.userAllCards[this.state.userIndexCounter]
+    let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
     const currentUser = this.state.currentUser
     const gameStatus = this.state.gameStatus
     const userCardCount = this.state.userAllCards.length
@@ -81,7 +97,7 @@ class App extends React.Component {
             currentUser={currentUser}
             gameStatus={gameStatus}
           />
-          <CardContainer 
+          {this.state.gameStart ? <CardContainer 
             allCards={allCards} 
             userCard={userCard} 
             oppCard={oppCard}
@@ -90,7 +106,7 @@ class App extends React.Component {
             currentUser={currentUser} 
             setUserCard={this.setUserCard} 
             setOppCard={this.setOppCard}
-          />
+          /> : <button onClick={this.startGame}>Start the game!</button>}
           
         </header>
       </div>
