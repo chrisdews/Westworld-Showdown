@@ -34,7 +34,7 @@ class App extends React.Component {
     // API.cards()
     // .then(data => console.log(data))   
 
-    const cardsURL = 'http://localhost:3000/api/v1/cards'
+    // const cardsURL = 'http://localhost:3000/api/v1/cards'
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
     
     console.log("App has mounted")
@@ -173,10 +173,10 @@ class App extends React.Component {
       createUserOrSignIn={this.createUserOrSignIn}
     />
     )
-  }
-  else {
-    return <h1>HELLO</h1>
-  }
+    }
+    else {
+      return <h1>HELLO</h1>
+    }
   }
 
   render() {
@@ -203,7 +203,7 @@ class App extends React.Component {
             currentUser={currentUser}
             gameStatus={gameStatus}
           />
-          {this.state.gameStart ? <CardContainer 
+          {/* {this.state.gameStart ? <CardContainer 
             allCards={allCards} 
             userCard={userCard} 
             oppCard={oppCard}
@@ -212,7 +212,7 @@ class App extends React.Component {
             currentUser={currentUser} 
             setUserCard={this.setUserCard} 
             setOppCard={this.setOppCard}
-          /> : <button onClick={this.startGame}>Start the game!</button>}
+          /> : <button onClick={this.startGame}>Start the game!</button>} */}
           
 
 
@@ -226,11 +226,24 @@ class App extends React.Component {
               />
 
               <Route exact path='/game' render={routerProps =>
-                <CardContainer {...routerProps}
-                  allCards={allCards}
-                  currentUser={this.state.user}
-                  clearUserState={this.clearUserState}
-                />} />
+
+
+                        (this.state.gameStart ? <CardContainer
+                          {...routerProps}
+                          currentUser={this.state.user}
+                          clearUserState={this.clearUserState} 
+                          allCards={allCards} 
+                          userCard={userCard} 
+                          oppCard={oppCard}
+                          userCardCount={userCardCount}
+                          oppCardCount={oppCardCount}
+                          // currentUser={currentUser} 
+                          setUserCard={this.setUserCard} 
+                          setOppCard={this.setOppCard}
+                        /> : <button onClick={this.startGame}>Start the game!</button>)
+              }
+              />
+
 
             </Switch>
 
@@ -245,3 +258,14 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+
+
+
+
+                /* /* <CardContainer {...routerProps}
+                  // allCards={allCards}
+                  currentUser={this.state.user}
+                  clearUserState={this.clearUserState}
+                />} /> */
