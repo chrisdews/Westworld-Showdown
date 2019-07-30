@@ -19,6 +19,7 @@ class CardContainer extends Component {
     }
   }
 
+
 componentDidMount(){
   if (!localStorage.token) {
     console.log("No Current User...redirecting back to welcome page")
