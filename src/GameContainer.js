@@ -18,6 +18,7 @@ class GameContainer extends Component {
     userAllCards: [],
     oppAllCards: [],
     gameStart: false,
+    gameOver: false
   }
 
   componentDidMount(){
@@ -33,11 +34,15 @@ class GameContainer extends Component {
   }
 
   setUserCard = (attributeKey, attributeValue) => {
-    console.log(attributeKey, attributeValue)
+    let userCardsLength = this.state.userAllCards.length -1
+    let oppCardsLength = this.state.oppAllCards.length -1
+    this.state.userIndexCounter < userCardsLength ? console.log(userCardsLength) : this.setState({userIndexCounter: 0})
+    this.state.oppIndexCounter < oppCardsLength ? console.log(oppCardsLength) : this.setState({oppIndexCounter: 0})
+    // check if indexCounter is < array.length, reset indexcounter in state if true.
+  
     let userCard = this.state.userAllCards[this.state.userIndexCounter]
     let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
-    console.log(userCard)
-    console.log(oppCard)  
+    // assign visible cards based on index counter
 
     if (attributeValue > oppCard[attributeKey]){
       let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
