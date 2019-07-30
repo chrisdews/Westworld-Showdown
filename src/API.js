@@ -6,6 +6,8 @@ const cardsUrl = `${endpoint}/cards`
 const signupUrl = `${endpoint}/users`
 const loginUrl = `${endpoint}/login`
 const validateUrl = `${endpoint}/validate`
+const totalsUrl = `${endpoint}/totals`
+
 //const postsUrl = `${endpoint}/posts`
 
 const jsonify = res => {
@@ -85,6 +87,12 @@ const validateUser = () => {
     .catch(handleServerError)
 }
 
+const fetchTotalScores = () => {
+  return fetch(totalsUrl)
+    .then(jsonify)
+    .catch(handleServerError)
+}
+
 const clearToken = () => localStorage.removeItem('token')
 
 export default {
@@ -92,7 +100,8 @@ export default {
   logIn,
   validateUser,
   clearToken,
-  cards
+  cards,
+  fetchTotalScores
 }
 
 

@@ -34,6 +34,7 @@ class GameContainer extends Component {
     this.getCards()
   }
 
+
   getCards = () => {
     API.cards().then(cards => this.setState({allCards: cards}))
   }
@@ -154,6 +155,10 @@ class GameContainer extends Component {
           to='/'
           onClick={this.handleClick}
         >Log Out</Button>
+        <Button
+          as={NavLink}
+          to='/scores'
+        >See High Scores!</Button>
 
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
@@ -177,7 +182,7 @@ class GameContainer extends Component {
           showCardStats={showCardStats}
         />
         </>
-        : <button onClick={this.startGame}>Start the game!</button>}
+        : <Button onClick={this.startGame}>Start the game!</Button>}
 
         
         
