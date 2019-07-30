@@ -9,6 +9,7 @@ class OpponentCard extends React.Component {
   render() {
     return (
      <Card>
+     {console.log(this.props)}
      
       <Image src={this.props.card.imageurl} wrapped ui={false} />
         <Card.Content>
