@@ -21,7 +21,6 @@ class GameContainer extends Component {
     userAllCards: [],
     oppAllCards: [],
     gameStart: false,
-    // usersTurn: true,
     userWon: false,
     oppWon: false
   }
@@ -36,16 +35,35 @@ class GameContainer extends Component {
   }
 
   startGame = () => {
+    const allCards = this.state.allCards
+    let newCards = this.shuffleArray(allCards)
+    const userCards = newCards.slice(allCards.length/2, allCards.length)
+    const oppCards = newCards.slice(0, allCards.length/2)
+    console.log(userCards, oppCards)
     this.setState({
+      userIndexCounter: 0,
+      oppIndexCounter: 0,
       gameStart: true,
       userWon: false,
-      oppWon: false
+      oppWon: false,
+      userAllCards: userCards,
+      oppAllCards: oppCards
+      
     })
-    const allCards = this.state.allCards
-    const randNum = this.getRandomInt()
-    const userCards = allCards.splice(randNum, allCards.length/2)
-    this.setState({userAllCards: userCards, oppAllCards: allCards})
   }
+
+  shuffleArray = (allCards) => {
+    let currentIndex = allCards.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = allCards[currentIndex];
+    allCards[currentIndex] = allCards[randomIndex];
+    allCards[randomIndex] = temporaryValue;
+    }
+    return allCards;
+   }
+  
 
   setUserCard = (attributeKey, attributeValue) => {
     let userCardsLength = this.state.userAllCards.length -1
@@ -61,47 +79,37 @@ class GameContainer extends Component {
     const winMatchUp = () => {
       let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
       let oppAllCards = this.state.oppAllCards
-      let newOppCards = oppAllCards.filter(card => card.id !== oppCard.id)
-      newOppCards.length === 0 ? this.setState({userWon: true}) : console.log('carry on')
+      let continueGameOppCards = oppAllCards.filter(card => card.id !== oppCard.id)
+
+      continueGameOppCards.length === 0 ? this.setState({userWon: true}) : console.log('carry on')
+      // checking for empty array, if empty userWon = true and cards no longer render
 
       this.setState({
         gameStatus: winnerText, 
         userAllCards: [...this.state.userAllCards, oppCard], 
-        oppAllCards: newOppCards, 
+        oppAllCards: continueGameOppCards, 
         userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? ++this.state.userIndexCounter : 0)
-      })  
-      this.state.userAllCards.length > 0 || this.state.oppAllCards.length > 0 ? this.setState({gameOver: false}) : this.setState({gameOver: true})
-      // checking for empty arrays, both must have length > 0 else gameOver = true
-    }
+      }) 
+    }  
+    
 
     const loseMatchUp = () => {
       let loserText = `${userCard.name} was brutally disabled by ${oppCard.name}! Your opponent took ownership of ${userCard.name}`
       let oldUserAllCards = this.state.userAllCards
       let newUserCards = oldUserAllCards.filter(card => card.id !== userCard.id)
-      newUserCards.length === 0 ? this.setState({oppWon: true}) : console.log('carry on')
-      // checking for empty array, if true gameOver = true
-      // need to do this for oppcards too...
-
+      newUserCards.length === 0 ? this.setState({oppWon: true}) : console.log('carry on') 
+      // checking for empty array, if empty oppWon = true and cards no longer render
       this.setState({
         gameStatus: loserText, 
         oppAllCards: [...this.state.oppAllCards, userCard], 
         userAllCards: newUserCards, 
         oppIndexCounter: (this.state.oppIndexCounter < this.state.oppAllCards.length ? ++this.state.oppIndexCounter : 0),
       }) 
-      
+    }  
 
-    }
-    
     (attributeValue > oppCard[attributeKey]) ? winMatchUp() : loseMatchUp()
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
-
-    
-    
   }
-
-
-
-  getRandomInt = () => (Math.floor(Math.random()*Math.floor(8)))
 
   handleClick = () => {
     console.log("User logged out!!")
@@ -113,7 +121,7 @@ class GameContainer extends Component {
     const allCards = this.state.allCards
     let userCard = this.state.userAllCards[this.state.userIndexCounter]
     let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
-    const currentUser = this.state.currentUser
+    const currentUser = this.props.currentUser
     const gameStatus = this.state.gameStatus
     const userCardCount = this.state.userAllCards.length
     const oppCardCount = this.state.oppAllCards.length

@@ -10,30 +10,13 @@ import API from './API'
 
 class CardContainer extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   console.log("Card Container Constructor Triggered")
-  //   this.state = {
-  //     currentUser: null
-  //   }
-  // }
-
-
-
-
-  // handleClick = () => {
-  //   console.log("User logged out!!")
-  //   this.props.clearUserState()
-  //   API.clearToken()
-  // }
-
 
   render() {
     console.log("CardContainer has rendered")
 
     const allCards = this.props.allCards
     const { currentUser } = this.props
-   
+
     return (
       
       <>
