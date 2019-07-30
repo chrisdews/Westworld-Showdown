@@ -26,12 +26,11 @@ class App extends React.Component {
 
   setCurrentUserFromToken = () => {
     let token = localStorage.token ? localStorage.token : null
-    //debugger
+
     if (token){
       API.validateUser().then(user => {
         this.setState({user})
-      })
-      
+      })  
     }
   }
 
@@ -126,7 +125,6 @@ class App extends React.Component {
                 />} />
 
             </Switch>
-
           </React.Fragment>
 
 
@@ -135,5 +133,4 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;

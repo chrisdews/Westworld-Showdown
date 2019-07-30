@@ -15,25 +15,7 @@ class CardContainer extends Component {
       currentUser: null
     }
   }
-
-  // getUserFromToken = () => {
-  //   return API.validateUser().then(resp => {
-  //     this.setState({ currentUser: resp })
-  //     return resp
-  //   }
-    
-  //   )
-
-  // }
-
-  // componentDidMount() {
-  //   this.getUserFromToken().then(resp => {
-  //     if (!this.state.currentUser) {
-  //       console.log("No Current User...redirecting back to welcome page")
-  //       this.props.history.push('/')
-  //     }
-  //   })
-  // }
+s
 
 componentDidMount(){
   if (!localStorage.token) {
