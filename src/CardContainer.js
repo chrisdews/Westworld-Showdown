@@ -31,19 +31,20 @@ class CardContainer extends Component {
         
               <Grid columns={2} relaxed='very'>
                 <Grid.Column>
-                  <h1>Your Card:</h1>
+                  <h1>Your Card</h1>
                   <CharCard 
                     card={this.props.userCard} 
-                    setCard={this.props.setUserCard} 
+                    setCard={this.props.setUserCard}
                   />
                   <HandStatus 
-                    user={this.props.currentUser}
+                    currentUser={this.props.currentUser}
                     cardCount={this.props.userCardCount}
                   />
                   
                 </Grid.Column>
+                
                 <Grid.Column>
-                  <h1>Opponent Card:</h1>
+                  <h1>Opponent Card</h1>
                   <OpponentCard 
                     card={this.props.oppCard} 
                     showCardStats={this.props.showCardStats}
@@ -54,8 +55,10 @@ class CardContainer extends Component {
                   />
                   
                 </Grid.Column>
+                
               </Grid>
               <Divider vertical>vs</Divider>
+              
 
               
       
