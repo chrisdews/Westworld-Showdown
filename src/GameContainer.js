@@ -8,8 +8,6 @@ import { NavLink } from "react-router-dom";
 import { Button } from 'semantic-ui-react'
 import API from "./API.js";
 
-const cardsURL = "http://localhost:3000/api/v1/cards";
-
 class GameContainer extends Component {
   state ={
     // currentUser: 'Chris',
@@ -22,7 +20,7 @@ class GameContainer extends Component {
     showCardStats: false,
     gameStart: false,
     userWon: false,
-    oppWon: false
+    oppWon: false,
   }
 
   componentDidMount(){

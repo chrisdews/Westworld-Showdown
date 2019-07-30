@@ -9,11 +9,13 @@ class OpponentCard extends React.Component {
   render() {
     return (
      <Card>
-      <Image src={this.props.card.imageurl} wrapped ui={false} />
+      <div className="char-img">
+       <Image src={this.props.card.imageurl} wrapped ui={false} />
+      </div>
         <Card.Content>
-          <Card.Header name="name">{this.props.card.name}</Card.Header>
+          <Card.Header name="name" className="char-name">{this.props.card.name}</Card.Header>
               
-          <Card.Description>
+          <Card.Description className="card-description">
             {this.props.card.description}
           </Card.Description>
         </Card.Content>
