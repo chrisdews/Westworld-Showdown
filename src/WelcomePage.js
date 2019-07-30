@@ -16,6 +16,13 @@ class WelcomePage extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (localStorage.token) {
+      console.log("Token in localStorage ...redirecting to '/game'")
+          this.props.history.push('/game')
+    }
+  }
+
   render() {
     console.log("The Welcome Page has rendered") 
     return (

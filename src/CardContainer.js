@@ -8,30 +8,24 @@ import { NavLink } from "react-router-dom";
 import API from './API'
 //import { Redirect } from 'react-router-dom'
 
-
 class CardContainer extends Component {
 
-  constructor(props) {
-    super(props);
-    console.log("Card Container Constructor Triggered")
-    this.state = {
-      currentUser: null
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   console.log("Card Container Constructor Triggered")
+  //   this.state = {
+  //     currentUser: null
+  //   }
+  // }
 
 
-componentDidMount(){
-  if (!localStorage.token) {
-    console.log("No Current User...redirecting back to welcome page")
-        this.props.history.push('/')
-  }
-}
 
-  handleClick = () => {
-    console.log("User logged out!!")
-    this.props.clearUserState()
-    API.clearToken()
-  }
+
+  // handleClick = () => {
+  //   console.log("User logged out!!")
+  //   this.props.clearUserState()
+  //   API.clearToken()
+  // }
 
 
   render() {
@@ -39,15 +33,15 @@ componentDidMount(){
 
     const allCards = this.props.allCards
     const { currentUser } = this.props
-
+   debugger
     return (
       
       <>
-        <Button
+        {/* <Button
           as={NavLink}
           to='/'
           onClick={this.handleClick}
-        >Log Out</Button>
+        >Log Out</Button> */}
         {/* <h2> {currentUser ? `Logged in as ${this.props.currentUser.username}` : null}</h2> */}
         <h2> {currentUser ? `Logged in as ${currentUser}` : null}</h2>
 

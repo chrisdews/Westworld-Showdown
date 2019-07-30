@@ -4,15 +4,16 @@ import CardContainer from './CardContainer'
 import GameDisplay from './GameDisplay'
 import WinMessage from './WinMessage'
 import LoseMessage from './LoseMessage'
+import { NavLink } from "react-router-dom";
+import { Button } from 'semantic-ui-react'
+
 import API from "./API.js";
 
 const cardsURL = "http://localhost:3000/api/v1/cards";
 
-
 class GameContainer extends Component {
-
   state ={
-    currentUser: 'Chris',
+    // currentUser: 'Chris',
     allCards: [],
     gameStatus: 'Let the battle commence...',
     userIndexCounter: 0,
@@ -26,8 +27,14 @@ class GameContainer extends Component {
   }
 
   componentDidMount(){
+    if (!localStorage.token) {
+      console.log("No Current User...redirecting back to welcome page")
+          this.props.history.push('/')
+          return null
+    }
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
   }
+
 
   startGame = () => {
     this.setState({
@@ -97,6 +104,12 @@ class GameContainer extends Component {
 
   getRandomInt = () => (Math.floor(Math.random()*Math.floor(8)))
 
+  handleClick = () => {
+    console.log("User logged out!!")
+    this.props.clearUserState()
+    API.clearToken()
+  }
+
   render() {
     const allCards = this.state.allCards
     let userCard = this.state.userAllCards[this.state.userIndexCounter]
@@ -117,6 +130,13 @@ class GameContainer extends Component {
         <LoseMessage 
           currentUser={currentUser}
         /> : null}
+
+        <Button
+          as={NavLink}
+          to='/'
+          onClick={this.handleClick}
+        >Log Out</Button>
+
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
          <>
@@ -128,7 +148,7 @@ class GameContainer extends Component {
           <CardContainer
           // {...routerProps}
           clearUserState={this.props.clearUserState} 
-          currentUser={currentUser}
+          currentUser={this.props.currentUser}
           allCards={allCards} 
           userCard={userCard} 
           oppCard={oppCard}
