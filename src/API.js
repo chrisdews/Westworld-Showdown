@@ -30,8 +30,9 @@ const handleServerError = errors => {
 } //only called in catch
 
 const cards = () => {
-  fetch(cardsUrl)
+  return fetch(cardsUrl)
     .then(jsonify)
+    // .then(console.log)
     .catch(handleServerError)
 }
 //Sam's Auth Code...

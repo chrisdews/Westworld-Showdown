@@ -63,6 +63,7 @@ class CardContainer extends Component {
                   <h1>Opponent Card:</h1>
                   <OpponentCard 
                     card={this.props.oppCard} 
+                    showCardStats={this.props.showCardStats}
                   />
                   <HandStatus 
                     user="Computer"
