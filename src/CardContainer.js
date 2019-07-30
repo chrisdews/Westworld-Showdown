@@ -33,7 +33,7 @@ class CardContainer extends Component {
 
     const allCards = this.props.allCards
     const { currentUser } = this.props
-   debugger
+   
     return (
       
       <>

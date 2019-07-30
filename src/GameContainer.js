@@ -29,7 +29,6 @@ class GameContainer extends Component {
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
   }
 
-
   startGame = () => {
     this.setState({gameStart: true})
     const allCards = this.state.allCards
