@@ -6,6 +6,8 @@ const cardsUrl = `${endpoint}/cards`
 const signupUrl = `${endpoint}/users`
 const loginUrl = `${endpoint}/login`
 const validateUrl = `${endpoint}/validate`
+const totalsUrl = `${endpoint}/totals`
+
 //const postsUrl = `${endpoint}/posts`
 
 const jsonify = res => {
@@ -30,7 +32,7 @@ const handleServerError = errors => {
 } //only called in catch
 
 const cards = () => {
-  fetch(cardsUrl)
+  return fetch(cardsUrl)
     .then(jsonify)
     .catch(handleServerError)
 }
@@ -84,6 +86,12 @@ const validateUser = () => {
     .catch(handleServerError)
 }
 
+const fetchTotalScores = () => {
+  return fetch(totalsUrl)
+    .then(jsonify)
+    .catch(handleServerError)
+}
+
 const clearToken = () => localStorage.removeItem('token')
 
 export default {
@@ -91,7 +99,8 @@ export default {
   logIn,
   validateUser,
   clearToken,
-  cards
+  cards,
+  fetchTotalScores
 }
 
 

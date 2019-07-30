@@ -7,18 +7,21 @@ import API from "./API.js";
 
 import { Route, Switch } from "react-router-dom";
 import WelcomePage from "./WelcomePage";
+import HighScoreContainer from './containers/HighScoreContainer';
 const cardsURL = "http://localhost:3000/api/v1/cards";
 
 class App extends React.Component {
   state = {
     username: "",
     password: "",
-    user: null
+    user: null,
+    scores: {}
   }
 
   componentDidMount(){
     console.log("App has mounted")
     this.setCurrentUserFromToken()
+    API.fetchTotalScores().then(scores => this.setState({scores}))
   }
 
   clearUserState = () => {
@@ -94,17 +97,27 @@ class App extends React.Component {
 
   return (
       <div className="App">
-        {this.state.errors}
+        {/* {this.state.errors} //REMOVE? */}
         <header className="App-header">
           <React.Fragment>
+            {/* <HighScoreContainer/> */}
             <Switch>
               <Route exact path="/test" render={() => <h1>Home!</h1>} />
+              {/* <Route exact path="/scores" component={HighScoreContainer} /> */}
 
+             
               <Route exact path='/' render={routerProps =>
                {return this.renderWelcomeOrWelcomeBack(routerProps)}
               }
               />
 
+              <Route exact path='/scores' render={routerProps =>
+                <HighScoreContainer 
+                  {...routerProps}  
+                  scores={this.state.scores}
+                />        
+              }
+              />
               <Route exact path='/game' render={routerProps =>
                 <GameContainer 
                   {...routerProps}

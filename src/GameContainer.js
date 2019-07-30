@@ -34,7 +34,6 @@ class GameContainer extends Component {
     fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
   }
 
-
   startGame = () => {
     const allCards = this.state.allCards
     let newCards = this.shuffleArray(allCards)
@@ -144,6 +143,10 @@ class GameContainer extends Component {
           to='/'
           onClick={this.handleClick}
         >Log Out</Button>
+        <Button
+          as={NavLink}
+          to='/scores'
+        >See High Scores!</Button>
 
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
@@ -166,7 +169,7 @@ class GameContainer extends Component {
           setOppCard={this.setOppCard}
         />
         </>
-        : <button onClick={this.startGame}>Start the game!</button>}
+        : <Button onClick={this.startGame}>Start the game!</Button>}
 
         
         
