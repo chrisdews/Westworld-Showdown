@@ -43,7 +43,7 @@ class CardContainer extends Component {
           onClick={this.handleClick}
         >Log Out</Button> */}
         {/* <h2> {currentUser ? `Logged in as ${this.props.currentUser.username}` : null}</h2> */}
-        <h2> {currentUser ? `Logged in as ${currentUser.username}` : null}</h2>
+        <h2> {currentUser ? `Logged in as ${currentUser}` : null}</h2>
 
         
               <Grid columns={2} relaxed='very'>
