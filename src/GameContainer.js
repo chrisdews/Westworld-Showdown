@@ -135,6 +135,10 @@ class GameContainer extends Component {
           to='/'
           onClick={this.handleClick}
         >Log Out</Button>
+        <Button
+          as={NavLink}
+          to='/scores'
+        >See High Scores!</Button>
 
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
@@ -157,7 +161,7 @@ class GameContainer extends Component {
           setOppCard={this.setOppCard}
         />
         </>
-        : <button onClick={this.startGame}>Start the game!</button>}
+        : <Button onClick={this.startGame}>Start the game!</Button>}
 
         
         
