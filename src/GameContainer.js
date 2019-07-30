@@ -83,8 +83,8 @@ class GameContainer extends Component {
         {this.state.gameStart ? 
           <CardContainer
           // {...routerProps}
+          clearUserState={this.props.clearUserState} 
           currentUser={currentUser}
-          clearUserState={this.clearUserState} 
           allCards={allCards} 
           userCard={userCard} 
           oppCard={oppCard}
