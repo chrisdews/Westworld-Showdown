@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import API from './API'
 //import { Redirect } from 'react-router-dom'
 
-
 class CardContainer extends Component {
 
   constructor(props) {
