@@ -78,7 +78,7 @@ class App extends React.Component {
   };
 
   renderWelcomeOrWelcomeBack = (routerProps) => {
-    if (!localStorage.token){
+    
     return(
       <WelcomePage {...routerProps}
       handleFormChange={this.handleFormChange}
@@ -87,10 +87,6 @@ class App extends React.Component {
       createUserOrSignIn={this.createUserOrSignIn}
     />
     )
-    }
-    else {
-      return <h1>HELLO</h1>
-    }
   }
 
   render() {
