@@ -15,7 +15,7 @@ class CardContainer extends Component {
       currentUser: null
     }
   }
-s
+
 
 componentDidMount(){
   if (!localStorage.token) {
