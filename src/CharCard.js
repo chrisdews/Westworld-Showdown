@@ -12,7 +12,6 @@ class CharCard extends React.Component {
                  
   render() {
     return (
-      
      <Card>
       <Image src={this.props.card.imageurl} wrapped ui={false} />
         <Card.Content>
