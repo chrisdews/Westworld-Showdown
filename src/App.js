@@ -121,7 +121,7 @@ class App extends React.Component {
               <Route exact path='/game' render={routerProps =>
                 <GameContainer 
                   {...routerProps}
-                  currentUser={this.state.user}
+                  currentUser={this.state.username}
                   clearUserState={this.clearUserState} 
                 />        
               }

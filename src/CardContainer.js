@@ -37,7 +37,7 @@ class CardContainer extends Component {
                     setCard={this.props.setUserCard}
                   />
                   <HandStatus 
-                    user={this.props.currentUser}
+                    currentUser={this.props.currentUser}
                     cardCount={this.props.userCardCount}
                   />
                   

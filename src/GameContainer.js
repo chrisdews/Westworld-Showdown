@@ -178,6 +178,8 @@ class GameContainer extends Component {
           setUserCard={this.setUserCard} 
           setOppCard={this.setOppCard}
           showCardStats={showCardStats}
+          
+          
         />
         </>
         : <Button onClick={this.startGame}>Start the game!</Button>}

@@ -25,15 +25,15 @@ class CharCard extends React.Component {
         </Card.Content>
         <Card.Content extra>
         <List>
-              <List.Item>
-                <List.Content className="flicker-1" onClick={() => this.handleClick('apperception', this.props.card.apperception)}>Apperception: {this.props.card.apperception}</List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Content className="flicker-2" onClick={() => this.handleClick('charm', this.props.card.charm)}>Charm: {this.props.card.charm}</List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Content className="flicker-3" onClick={() => this.handleClick('aggression', this.props.card.aggression)}>Aggression: {this.props.card.aggression}</List.Content>
-              </List.Item>
+          <List.Item>
+            <List.Content className="flicker-1" onClick={() => this.handleClick('apperception', this.props.card.apperception)}>Apperception: {this.props.card.apperception}</List.Content>
+          </List.Item>
+          <List.Item>
+            <List.Content className="flicker-2" onClick={() => this.handleClick('charm', this.props.card.charm)}>Charm: {this.props.card.charm}</List.Content>
+          </List.Item>
+          <List.Item>
+            <List.Content className="flicker-3" onClick={() => this.handleClick('aggression', this.props.card.aggression)}>Aggression: {this.props.card.aggression}</List.Content>
+          </List.Item>
         </List>
       </Card.Content>
      </Card>

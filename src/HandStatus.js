@@ -9,7 +9,7 @@ class GameDisplay extends React.Component {
   render() {
     return (
       <Header as='h3' block>
-        {this.props.user} has {this.props.cardCount} cards remaining
+        {this.props.currentUser} has {this.props.cardCount} cards remaining
       </Header>
     )
   }
