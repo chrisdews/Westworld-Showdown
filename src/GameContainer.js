@@ -112,10 +112,6 @@ class GameContainer extends Component {
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
 
-
-
-  getRandomInt = () => (Math.floor(Math.random()*Math.floor(8)))
-
   handleClick = () => {
     console.log("User logged out!!")
     this.props.clearUserState()
