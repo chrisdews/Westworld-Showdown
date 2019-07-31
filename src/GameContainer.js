@@ -72,6 +72,12 @@ class GameContainer extends Component {
     return allCards;
    }
   
+   postGame = () => {
+     let score = this.state.userWon ? 10 : 0
+     let userId = this.props.currentUserObj.id
+      let game = {user_id: userId, score: score }
+      API.postGame(game)
+   }
 
   setUserCard = (attributeKey, attributeValue) => {
     this.setState({attributeClicked: true})
@@ -87,14 +93,19 @@ class GameContainer extends Component {
 
     this.setState({showCardStats: true})
     // shows opponent card attributes
-
     const winMatchUp = () => {
       let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
       let oppAllCards = this.state.oppAllCards
       let continueGameOppCards = oppAllCards.filter(card => card.id !== oppCard.id)
-
-      continueGameOppCards.length === 0 ? this.setState({userWon: true}) : console.log('carry on')
       // checking for empty array, if empty userWon = true and cards no longer render
+
+if (continueGameOppCards.length === 0){
+  this.setState({userWon: true}) 
+  this.postGame()
+} else {
+  console.log('carry on')
+      
+}
 
       this.setState({
         gameStatus: winnerText, 
@@ -102,18 +113,22 @@ class GameContainer extends Component {
         oppAllCards: continueGameOppCards,
         showCardStats: false,
         userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? this.state.userIndexCounter +1 : 0),
-       
-
       }) 
-    }  
-    
+    }   
 
     const loseMatchUp = () => {
       let loserText = `${userCard.name} was brutally disabled by ${oppCard.name}! Your opponent took ownership of ${userCard.name}`
       let oldUserAllCards = this.state.userAllCards
       let newUserCards = oldUserAllCards.filter(card => card.id !== userCard.id)
-      newUserCards.length === 0 ? this.setState({oppWon: true}) : console.log('carry on') 
+ 
       // checking for empty array, if empty oppWon = true and cards no longer render
+      if (newUserCards.length === 0){
+        this.setState({oppWon: true}) 
+        this.postGame()
+      } else {
+        console.log('carry on')  
+      }
+
       this.setState({
         gameStatus: loserText, 
         oppAllCards: [...this.state.oppAllCards, userCard], 
@@ -125,6 +140,7 @@ class GameContainer extends Component {
     }  
 
     (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 2000) : setTimeout(loseMatchUp, 2000)
+
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
 
@@ -147,14 +163,8 @@ class GameContainer extends Component {
     return (
       <div className="App">
 
-        {this.state.userWon ? 
-        <WinMessage 
-          currentUser={currentUser}
-        /> : null}
-        {this.state.oppWon ? 
-        <LoseMessage 
-          currentUser={currentUser}
-        /> : null}
+        {this.state.userWon ? <WinMessage currentUser={currentUser} /> : null}
+        {this.state.oppWon ? <LoseMessage currentUser={currentUser} /> : null}
 
         <Button
           as={NavLink}

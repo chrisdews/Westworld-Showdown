@@ -122,6 +122,7 @@ class App extends React.Component {
                 <GameContainer 
                   {...routerProps}
                   currentUser={this.state.username}
+                  currentUserObj={this.state.user}
                   clearUserState={this.clearUserState} 
                 />        
               }

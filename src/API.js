@@ -7,6 +7,8 @@ const signupUrl = `${endpoint}/users`
 const loginUrl = `${endpoint}/login`
 const validateUrl = `${endpoint}/validate`
 const totalsUrl = `${endpoint}/totals`
+const gameUrl = `${endpoint}/games`
+
 
 //const postsUrl = `${endpoint}/posts`
 
@@ -93,6 +95,19 @@ const fetchTotalScores = () => {
     .catch(handleServerError)
 }
 
+const postGame = (game) => fetch(gameUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ game })
+}).then(jsonify)
+  .then(game => {
+    console.log("game: ", game)
+    return game
+  })
+  .catch(handleServerError)
+
 const clearToken = () => localStorage.removeItem('token')
 
 export default {
@@ -101,7 +116,8 @@ export default {
   validateUser,
   clearToken,
   cards,
-  fetchTotalScores
+  fetchTotalScores,
+  postGame
 }
 
 
