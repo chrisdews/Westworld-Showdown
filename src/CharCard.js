@@ -5,12 +5,24 @@ import { Card, Image, List} from 'semantic-ui-react'
 
 class CharCard extends React.Component {
 
+  state = {
+    clickable: true,
+  }
+
   handleClick = (attributeKey, attributeValue) => {
     this.props.setCard(attributeKey, attributeValue)
+    this.setState({clickable: false})
     
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.card !== prevProps.card) {
+      this.setState({clickable: true})
+    }
+  }
                  
-  render() {
+  render() {    
+
     return (
      <Card>
       <div className="char-img">
@@ -26,13 +38,13 @@ class CharCard extends React.Component {
         <Card.Content extra>
         <List>
           <List.Item>
-            <List.Content className="flicker-1" onClick={() => this.handleClick('apperception', this.props.card.apperception)}>Apperception: {this.props.card.apperception}</List.Content>
+            <List.Content className="flicker-1" onClick={this.state.clickable ? (() => this.handleClick('apperception', this.props.card.apperception)) : null}>Apperception: {this.props.card.apperception}</List.Content>
           </List.Item>
           <List.Item>
-            <List.Content className="flicker-2" onClick={() => this.handleClick('charm', this.props.card.charm)}>Charm: {this.props.card.charm}</List.Content>
+            <List.Content className="flicker-2" onClick={this.state.clickable ? (() => this.handleClick('charm', this.props.card.charm)) : null}>Charm: {this.props.card.charm}</List.Content>
           </List.Item>
           <List.Item>
-            <List.Content className="flicker-3" onClick={() => this.handleClick('aggression', this.props.card.aggression)}>Aggression: {this.props.card.aggression}</List.Content>
+            <List.Content className="flicker-3" onClick={this.state.clickable ? (() => this.handleClick('aggression', this.props.card.aggression)) : null}>Aggression: {this.props.card.aggression}</List.Content>
           </List.Item>
         </List>
       </Card.Content>
