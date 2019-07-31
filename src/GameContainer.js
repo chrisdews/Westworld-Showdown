@@ -21,6 +21,11 @@ class GameContainer extends Component {
     gameStart: false,
     userWon: false,
     oppWon: false,
+    attributeClicked: false,
+  }
+
+  setClickStatusTrue = () => {
+    this.setState({attributeClicked: true})
   }
 
   componentDidMount(){
@@ -50,8 +55,8 @@ class GameContainer extends Component {
       oppWon: false,
       showCardStats: false,
       userAllCards: userCards,
-      oppAllCards: oppCards
-      
+      oppAllCards: oppCards,
+      gameStatus: 'Let the battle commence...'
     })
   }
 
@@ -69,6 +74,7 @@ class GameContainer extends Component {
   
 
   setUserCard = (attributeKey, attributeValue) => {
+    this.setState({attributeClicked: true})
     let userCardsLength = this.state.userAllCards.length -1
     let oppCardsLength = this.state.oppAllCards.length -1
     this.state.userIndexCounter < userCardsLength ? console.log(userCardsLength) : this.setState({userIndexCounter: 0})
@@ -95,7 +101,8 @@ class GameContainer extends Component {
         userAllCards: [...this.state.userAllCards, oppCard], 
         oppAllCards: continueGameOppCards,
         showCardStats: false,
-        userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? ++this.state.userIndexCounter : 0),
+        userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? this.state.userIndexCounter +1 : 0),
+       
 
       }) 
     }  
@@ -112,11 +119,12 @@ class GameContainer extends Component {
         oppAllCards: [...this.state.oppAllCards, userCard], 
         userAllCards: newUserCards, 
         showCardStats: false,
-        oppIndexCounter: (this.state.oppIndexCounter < this.state.oppAllCards.length ? ++this.state.oppIndexCounter : 0),
+        oppIndexCounter: (this.state.oppIndexCounter < this.state.oppAllCards.length ? this.state.oppIndexCounter +1 : 0),
+
       }) 
     }  
 
-    (attributeValue > oppCard[attributeKey]) ? setTimeout(winMatchUp, 3000) : setTimeout(loseMatchUp, 3000)
+    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 2000) : setTimeout(loseMatchUp, 2000)
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
 
@@ -178,6 +186,7 @@ class GameContainer extends Component {
           setUserCard={this.setUserCard} 
           setOppCard={this.setOppCard}
           showCardStats={showCardStats}
+          setClickStatusTrue={this.setClickStatusTrue}
           
           
         />

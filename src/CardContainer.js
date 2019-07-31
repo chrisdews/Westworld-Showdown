@@ -35,6 +35,7 @@ class CardContainer extends Component {
                   <CharCard 
                     card={this.props.userCard} 
                     setCard={this.props.setUserCard}
+                    setClickStatusTrue={this.props.setClickStatusTrue}
                   />
                   <HandStatus 
                     currentUser={this.props.currentUser}
