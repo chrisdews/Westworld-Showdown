@@ -7,6 +7,7 @@ import LoseMessage from './LoseMessage'
 import { NavLink } from "react-router-dom";
 import { Button } from 'semantic-ui-react'
 import API from "./API.js";
+import CountDownTimer from './components/CountDownTimer';
 
 class GameContainer extends Component {
   state ={
@@ -21,6 +22,7 @@ class GameContainer extends Component {
     gameStart: false,
     userWon: false,
     oppWon: false,
+    timerState: null
   }
 
   componentDidMount(){
@@ -32,6 +34,9 @@ class GameContainer extends Component {
     this.getCards()
   }
 
+  setTimerState = (time) => {
+    this.setState({timerState: time })
+  }
 
   getCards = () => {
     API.cards().then(cards => this.setState({allCards: cards}))
@@ -68,7 +73,8 @@ class GameContainer extends Component {
    }
   
    postGame = () => {
-     let score = this.state.userWon ? 10 : 0
+     let timeLeft = this.state.timerState
+     let score = this.state.userWon ? 10 + timeLeft : 0
      let userId = this.props.currentUserObj.id
       let game = {user_id: userId, score: score }
       API.postGame(game)
@@ -172,6 +178,9 @@ if (continueGameOppCards.length === 0){
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
          <>
+
+         <CountDownTimer setTimerState={this.setTimerState}/>
+
           <GameDisplay 
           currentUser={currentUser}
           gameStatus={gameStatus}
