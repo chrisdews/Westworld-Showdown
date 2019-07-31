@@ -8,7 +8,12 @@ class GameDisplay extends React.Component {
 
   render() {
     let divStyle
-    if (this.props.winOrLose === "win") {
+    if (this.props.gameStatus === "Let the battle commence..."){
+      divStyle = {
+        color: 'black',
+      }
+    }
+    else if (this.props.winOrLose === "win") {
       divStyle = {
         color: 'green',
       }
@@ -16,7 +21,7 @@ class GameDisplay extends React.Component {
       divStyle = {
         color: 'red',
       }
-    }
+    } 
 
     return (
       <Header style={divStyle} as='h3' block>

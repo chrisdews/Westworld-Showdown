@@ -26,7 +26,7 @@ class GameContainer extends Component {
     timerState: null,
     winningScore: null,
     winOrLose: null,
-    attributeClicked: false,
+    attributeClicked: true,
   }
 
   setClickStatusTrue = () => {
@@ -38,8 +38,13 @@ class GameContainer extends Component {
       console.log("No Current User...redirecting back to welcome page")
           this.props.history.push('/')
           return null
+    }  else {
+      this.getCards()
+       this.props.setCurrentUserFromToken()
     }
-    this.getCards()
+   
+   
+    //set User from token
   }
 
   setTimerState = (time) => {
@@ -151,7 +156,7 @@ if (continueGameOppCards.length === 0){
       }) 
     }  
 
-    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 100) : setTimeout(loseMatchUp, 100)
+    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 500) : setTimeout(loseMatchUp, 500)
 
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }

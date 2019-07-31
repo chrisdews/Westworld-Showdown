@@ -8,14 +8,13 @@ import { NavLink } from "react-router-dom";
 
 class HighScoreContainer extends Component {
 
-  // state ={
-  //   scores: {}
-  // }
+  componentDidMount() {
+    this.props.fetchTotalScores()
+  }
 
   changeScoresToArray = () => {
     let obj = this.props.scores
     return Object.entries(obj).map(([key, value]) => ({key,value}));
-
   }
 
   render() {
