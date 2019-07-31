@@ -34,6 +34,7 @@ const handleServerError = errors => {
 const cards = () => {
   return fetch(cardsUrl)
     .then(jsonify)
+    // .then(console.log)
     .catch(handleServerError)
 }
 //Sam's Auth Code...
