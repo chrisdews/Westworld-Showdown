@@ -6,10 +6,7 @@ import WinMessage from './WinMessage'
 import LoseMessage from './LoseMessage'
 import { NavLink } from "react-router-dom";
 import { Button } from 'semantic-ui-react'
-
 import API from "./API.js";
-
-const cardsURL = "http://localhost:3000/api/v1/cards";
 
 class GameContainer extends Component {
   state ={
@@ -20,9 +17,10 @@ class GameContainer extends Component {
     oppIndexCounter: 0,
     userAllCards: [],
     oppAllCards: [],
+    showCardStats: false,
     gameStart: false,
     userWon: false,
-    oppWon: false
+    oppWon: false,
   }
 
   componentDidMount(){
@@ -31,7 +29,12 @@ class GameContainer extends Component {
           this.props.history.push('/')
           return null
     }
-    fetch(cardsURL).then(resp => resp.json()).then(data => this.setState({allCards: data})) 
+    this.getCards()
+  }
+
+
+  getCards = () => {
+    API.cards().then(cards => this.setState({allCards: cards}))
   }
 
   startGame = () => {
@@ -39,13 +42,13 @@ class GameContainer extends Component {
     let newCards = this.shuffleArray(allCards)
     const userCards = newCards.slice(allCards.length/2, allCards.length)
     const oppCards = newCards.slice(0, allCards.length/2)
-    console.log(userCards, oppCards)
     this.setState({
       userIndexCounter: 0,
       oppIndexCounter: 0,
       gameStart: true,
       userWon: false,
       oppWon: false,
+      showCardStats: false,
       userAllCards: userCards,
       oppAllCards: oppCards
       
@@ -76,6 +79,9 @@ class GameContainer extends Component {
     let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
     // assign current visible cards based on index counter
 
+    this.setState({showCardStats: true})
+    // shows opponent card attributes
+
     const winMatchUp = () => {
       let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
       let oppAllCards = this.state.oppAllCards
@@ -87,8 +93,10 @@ class GameContainer extends Component {
       this.setState({
         gameStatus: winnerText, 
         userAllCards: [...this.state.userAllCards, oppCard], 
-        oppAllCards: continueGameOppCards, 
-        userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? ++this.state.userIndexCounter : 0)
+        oppAllCards: continueGameOppCards,
+        showCardStats: false,
+        userIndexCounter: (this.state.userIndexCounter < this.state.userAllCards.length ? ++this.state.userIndexCounter : 0),
+
       }) 
     }  
     
@@ -103,11 +111,12 @@ class GameContainer extends Component {
         gameStatus: loserText, 
         oppAllCards: [...this.state.oppAllCards, userCard], 
         userAllCards: newUserCards, 
+        showCardStats: false,
         oppIndexCounter: (this.state.oppIndexCounter < this.state.oppAllCards.length ? ++this.state.oppIndexCounter : 0),
       }) 
     }  
 
-    (attributeValue > oppCard[attributeKey]) ? winMatchUp() : loseMatchUp()
+    (attributeValue > oppCard[attributeKey]) ? setTimeout(winMatchUp, 3000) : setTimeout(loseMatchUp, 3000)
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
 
@@ -125,6 +134,7 @@ class GameContainer extends Component {
     const gameStatus = this.state.gameStatus
     const userCardCount = this.state.userAllCards.length
     const oppCardCount = this.state.oppAllCards.length
+    const showCardStats = this.state.showCardStats
 
     return (
       <div className="App">
@@ -167,6 +177,9 @@ class GameContainer extends Component {
           oppCardCount={oppCardCount}
           setUserCard={this.setUserCard} 
           setOppCard={this.setOppCard}
+          showCardStats={showCardStats}
+          
+          
         />
         </>
         : <Button onClick={this.startGame}>Start the game!</Button>}

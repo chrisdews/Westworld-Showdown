@@ -9,28 +9,29 @@ class OpponentCard extends React.Component {
   render() {
     return (
      <Card>
-     {console.log(this.props)}
-     
-      <Image src={this.props.card.imageurl} wrapped ui={false} />
+      <div className="char-img">
+       <Image src={this.props.card.imageurl} wrapped ui={false} />
+      </div>
         <Card.Content>
-          <Card.Header name="name">{this.props.card.name}</Card.Header>
+          <Card.Header name="name" className="char-name">{this.props.card.name}</Card.Header>
               
-          <Card.Description>
+          <Card.Description className="card-description">
             {this.props.card.description}
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
+        
         <List>
               <List.Item>
-                <List.Content>Apperception: {this.props.card.apperception}</List.Content>
+              {this.props.showCardStats ? <List.Content>Apperception: {this.props.card.apperception}</List.Content> : '?' }
               </List.Item>
               <List.Item>
-                <List.Content>Charm: {this.props.card.charm}</List.Content>
+              {this.props.showCardStats ? <List.Content>Charm: {this.props.card.charm}</List.Content> : '?' }
               </List.Item>
               <List.Item>
-                <List.Content>Aggression: {this.props.card.aggression}</List.Content>
+              {this.props.showCardStats ? <List.Content>Aggression: {this.props.card.aggression}</List.Content> : '?' }
               </List.Item>
-        </List>
+        </List> 
       </Card.Content>
      </Card>
       
