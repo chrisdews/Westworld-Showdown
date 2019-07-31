@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Image, List} from 'semantic-ui-react'
 
 
-
 class CharCard extends React.Component {
 
   state = {
