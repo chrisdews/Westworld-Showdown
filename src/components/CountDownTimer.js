@@ -6,7 +6,7 @@ const CountDownTimer = ({setTimerState}) =>{
     return (
     
         <Timer
-    initialTime={60000}
+    initialTime={65000}
     direction="backward"
     checkpoints = 	{[
       {

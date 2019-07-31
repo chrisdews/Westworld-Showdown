@@ -25,7 +25,8 @@ class GameContainer extends Component {
     oppWon: false,
     timerState: null,
     winningScore: null,
-    attributeClicked: false,
+    winOrLose: null,
+    attributeClicked: true,
   }
 
   setClickStatusTrue = () => {
@@ -37,8 +38,13 @@ class GameContainer extends Component {
       console.log("No Current User...redirecting back to welcome page")
           this.props.history.push('/')
           return null
+    }  else {
+      this.getCards()
+       this.props.setCurrentUserFromToken()
     }
-    this.getCards()
+   
+   
+    //set User from token
   }
 
   setTimerState = (time) => {
@@ -104,6 +110,7 @@ class GameContainer extends Component {
     // shows opponent card attributes
     const winMatchUp = () => {
       let winnerText = `${userCard.name} took down ${oppCard.name}! You took ownership of ${oppCard.name}`
+      this.setState({winOrLose: "win"})
       let oppAllCards = this.state.oppAllCards
       let continueGameOppCards = oppAllCards.filter(card => card.id !== oppCard.id)
       // checking for empty array, if empty userWon = true and cards no longer render
@@ -127,6 +134,7 @@ if (continueGameOppCards.length === 0){
 
     const loseMatchUp = () => {
       let loserText = `${userCard.name} was brutally disabled by ${oppCard.name}! Your opponent took ownership of ${userCard.name}`
+      this.setState({winOrLose: "lose"})
       let oldUserAllCards = this.state.userAllCards
       let newUserCards = oldUserAllCards.filter(card => card.id !== userCard.id)
  
@@ -148,7 +156,7 @@ if (continueGameOppCards.length === 0){
       }) 
     }  
 
-    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 100) : setTimeout(loseMatchUp, 100)
+    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 500) : setTimeout(loseMatchUp, 500)
 
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
@@ -169,7 +177,7 @@ if (continueGameOppCards.length === 0){
     const oppCardCount = this.state.oppAllCards.length
     //const showCardStats = this.state.showCardStats
     //const timerState = this.state.timerState
-    const {winningScore, timerState, gameStatus, allCards, showCardStats} = this.state
+    const {winningScore, timerState, gameStatus, allCards, showCardStats, winOrLose} = this.state
 
     return (
       <div className="App">
@@ -196,6 +204,7 @@ if (continueGameOppCards.length === 0){
           <GameDisplay 
           currentUser={currentUser}
           gameStatus={gameStatus}
+          winOrLose={winOrLose}
           />
 
           <CardContainer

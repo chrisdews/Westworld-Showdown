@@ -20,8 +20,13 @@ class App extends React.Component {
 
   componentDidMount(){
     console.log("App has mounted")
-    this.setCurrentUserFromToken()
-    API.fetchTotalScores().then(scores => this.setState({scores}))
+    //this.setCurrentUserFromToken().then(data => this.fetchTotalScores())
+    this.fetchTotalScores().then(data => this.setCurrentUserFromToken())
+    //API.fetchTotalScores().then(scores => this.setState({scores}))
+  }
+
+  fetchTotalScores = () => {
+    return API.fetchTotalScores().then(scores => this.setState({scores}))
   }
 
   clearUserState = () => {
@@ -115,6 +120,7 @@ class App extends React.Component {
                 <HighScoreContainer 
                   {...routerProps}  
                   scores={this.state.scores}
+                  fetchTotalScores={this.fetchTotalScores}
                 />        
               }
               />
@@ -124,6 +130,7 @@ class App extends React.Component {
                   currentUser={this.state.username}
                   currentUserObj={this.state.user}
                   clearUserState={this.clearUserState} 
+                  setCurrentUserFromToken={this.setCurrentUserFromToken}
                 />        
               }
               />
