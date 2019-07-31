@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from 'semantic-ui-react'
 import API from "./API.js";
 import CountDownTimer from './components/CountDownTimer';
+import Instructions from './components/Instructions';
 
 class GameContainer extends Component {
   state ={
@@ -23,6 +24,7 @@ class GameContainer extends Component {
     userWon: false,
     oppWon: false,
     timerState: null,
+    winningScore: null,
     attributeClicked: false,
   }
 
@@ -80,6 +82,7 @@ class GameContainer extends Component {
    postGame = () => {
      let timeLeft = this.state.timerState
      let score = this.state.userWon ? 10 + timeLeft : 0
+     this.setState({winningScore: score})
      let userId = this.props.currentUserObj.id
       let game = {user_id: userId, score: score }
       API.postGame(game)
@@ -128,7 +131,7 @@ if (continueGameOppCards.length === 0){
       let newUserCards = oldUserAllCards.filter(card => card.id !== userCard.id)
  
       // checking for empty array, if empty oppWon = true and cards no longer render
-      if (newUserCards.length === 0){
+      if (newUserCards.length === 0 || this.state.timerState === 0){
         this.setState({oppWon: true}) 
         this.postGame()
       } else {
@@ -145,7 +148,7 @@ if (continueGameOppCards.length === 0){
       }) 
     }  
 
-    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 2000) : setTimeout(loseMatchUp, 2000)
+    (attributeValue > oppCard[attributeKey]) && this.state.attributeClicked === true ? setTimeout(winMatchUp, 100) : setTimeout(loseMatchUp, 100)
 
     // if chosen attibute is greater than opponent card attribute run Win, else run Lose
   }
@@ -157,20 +160,22 @@ if (continueGameOppCards.length === 0){
   }
 
   render() {
-    const allCards = this.state.allCards
+    //const allCards = this.state.allCards
     let userCard = this.state.userAllCards[this.state.userIndexCounter]
     let oppCard = this.state.oppAllCards[this.state.oppIndexCounter]
     const currentUser = this.props.currentUser
-    const gameStatus = this.state.gameStatus
+    //const gameStatus = this.state.gameStatus
     const userCardCount = this.state.userAllCards.length
     const oppCardCount = this.state.oppAllCards.length
-    const showCardStats = this.state.showCardStats
+    //const showCardStats = this.state.showCardStats
+    //const timerState = this.state.timerState
+    const {winningScore, timerState, gameStatus, allCards, showCardStats} = this.state
 
     return (
       <div className="App">
 
-        {this.state.userWon ? <WinMessage currentUser={currentUser} /> : null}
-        {this.state.oppWon ? <LoseMessage currentUser={currentUser} /> : null}
+        {this.state.userWon ? <WinMessage winningScore={winningScore} currentUser={currentUser} /> : null}
+        {this.state.oppWon ? <LoseMessage timerState={timerState} currentUser={currentUser} /> : null}
 
         <Button
           as={NavLink}
@@ -180,7 +185,7 @@ if (continueGameOppCards.length === 0){
         <Button
           as={NavLink}
           to='/scores'
-        >See High Scores!</Button>
+        >See Top Players!</Button>
 
         
         {this.state.gameStart && !this.state.oppWon && !this.state.userWon ? 
@@ -210,7 +215,14 @@ if (continueGameOppCards.length === 0){
           
         />
         </>
-        : <Button onClick={this.startGame}>Start the game!</Button>}
+        : 
+        <>
+        <Button onClick={this.startGame}>Start the game!</Button>
+        
+        <Instructions/>
+        </>
+        
+        }
 
         
         

@@ -30,7 +30,7 @@ const CountDownTimer = ({setTimerState}) =>{
             <Timer.Minutes /> minutes {" "}
             <Timer.Seconds /> seconds
             {/* <Timer.Milliseconds /> milliseconds */}
-            <div>{getTimerState()}</div>
+          
         </React.Fragment>
     )}
 </Timer>

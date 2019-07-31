@@ -9,7 +9,7 @@ class WinMessage extends React.Component {
   render() {
     return (
       <Header as='h3' block>
-        Congratulations {this.props.currentUser}! You Won!
+        Congratulations {this.props.currentUser}! You Won! Score: {this.props.winningScore}
       </Header>
     )
   }

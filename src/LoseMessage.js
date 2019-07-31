@@ -9,7 +9,8 @@ class LoseMessage extends React.Component {
   render() {
     return (
       <Header as='h3' block>
-        Unlucky, {this.props.currentUser}. You Lost!
+        {/* Unlucky, {this.props.currentUser}. You Lost! */}
+       {this.props.timerState === 0 ? "Out of time! You Lost" : "You were defeated!"}
       </Header>
     )
   }
