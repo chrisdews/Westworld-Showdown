@@ -107,6 +107,7 @@ class App extends React.Component {
         <header className="App-header">
           <React.Fragment>
             {/* <HighScoreContainer/> */}
+            <h1>HELLO</h1>
             <Switch>
               <Route exact path="/test" render={() => <h1>Home!</h1>} />
               {/* <Route exact path="/scores" component={HighScoreContainer} /> */}
