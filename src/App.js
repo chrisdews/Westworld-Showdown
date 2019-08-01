@@ -8,7 +8,8 @@ import API from "./API.js";
 import { Route, Switch } from "react-router-dom";
 import WelcomePage from "./WelcomePage";
 import HighScoreContainer from './containers/HighScoreContainer';
-const cardsURL = "http://localhost:3000/api/v1/cards";
+//const cardsURL = "http://localhost:3000/api/v1/cards";
+const cardsURL = "https://safe-anchorage-93805.herokuapp.com/api/v1/cards";
 
 class App extends React.Component {
   state = {

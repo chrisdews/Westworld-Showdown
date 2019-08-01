@@ -1,6 +1,7 @@
 
 
-const endpoint = 'http://localhost:3000/api/v1/'
+//const endpoint = 'http://localhost:3000/api/v1/'
+const endpoint = 'https://safe-anchorage-93805.herokuapp.com/api/v1/'
 const cardsUrl = `${endpoint}/cards`
 //Sam's Auth code:
 const signupUrl = `${endpoint}/users`
