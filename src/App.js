@@ -106,10 +106,9 @@ class App extends React.Component {
         {/* {this.state.errors} //REMOVE? */}
         <header className="App-header">
           <React.Fragment>
-            {/* <HighScoreContainer/> */}
             <Switch>
               <Route exact path="/test" render={() => <h1>Home!</h1>} />
-              {/* <Route exact path="/scores" component={HighScoreContainer} /> */}
+             
 
              
               <Route exact path='/' render={routerProps =>
